@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
-const userController = require("./controller/users.controller");
 
 const app = express();
 
@@ -26,129 +25,128 @@ app.listen("8000", () => {
   console.log("Server is running on port 8000");
 });
 
-app.post("/api/user", userController.create);
+require(path.join(__dirname, "./Routes/users.routes"))(app);
+require(path.join(__dirname, "./Routes/restaurants.routes"))(app);
 
-console.log("directory name", __dirname);
+// const users = [
+//   {
+//     id: 1,
+//     name: "ankit",
+//     age: "23",
+//   },
+//   {
+//     id: 2,
+//     name: "ankita",
+//     age: "24",
+//   },
+//   {
+//     id: 3,
+//     name: "an",
+//     age: "23",
+//   },
+//   {
+//     id: 4,
+//     name: "ankit",
+//     age: "28",
+//   },
+// ];
 
-const users = [
-  {
-    id: 1,
-    name: "ankit",
-    age: "23",
-  },
-  {
-    id: 2,
-    name: "ankita",
-    age: "24",
-  },
-  {
-    id: 3,
-    name: "an",
-    age: "23",
-  },
-  {
-    id: 4,
-    name: "ankit",
-    age: "28",
-  },
-];
+// // GET Request
+// app.get("/", (req, res) => {
+//   res.send("Learning Node JS 1111");
+// });
 
-// GET Request
-app.get("/", (req, res) => {
-  res.send("Learning Node JS 1111");
-});
+// // CRUD
 
-// CRUD
+// // Create a user ----- POST
+// // Get a user ------ GET
+// // Update a user ------- PUT
+// // Delete a user ------ DELETE
 
-// Create a user ----- POST
-// Get a user ------ GET
-// Update a user ------- PUT
-// Delete a user ------ DELETE
+// // GET request to return all users
 
-// GET request to return all users
+// app.get("/api/users", (req, res) => {
+//   res.json(users);
+// });
 
-app.get("/api/users", (req, res) => {
-  res.json(users);
-});
+// // GET request to return a user with one particular id
 
-// GET request to return a user with one particular id
+// app.get("/api/users/:id", (req, res) => {
+//   const id = req.params.id;
 
-app.get("/api/users/:id", (req, res) => {
-  const id = req.params.id;
+//   console.log("id", id);
 
-  console.log("id", id);
+//   const user = users.find((user) => user.id == id);
 
-  const user = users.find((user) => user.id == id);
+//   console.log(user);
 
-  console.log(user);
+//   if (!user) {
+//     res.status(404).json({ message: "User does not exist" });
+//   }
 
-  if (!user) {
-    res.status(404).json({ message: "User does not exist" });
-  }
+//   res.json(user);
+// });
 
-  res.json(user);
-});
+// // Create a new user
 
-// Create a new user
+// // post
 
-// post
+// // app.post("/api/user", (req, res) => {
+// //   const name = req.body.name;
+// //   const age = req.body.age;
 
-// app.post("/api/user", (req, res) => {
-//   const name = req.body.name;
-//   const age = req.body.age;
+// //   const user = {
+// //     id: Math.random() * 10000,
+// //     name: name,
+// //     age: age,
+// //   };
 
-//   const user = {
-//     id: Math.random() * 10000,
-//     name: name,
-//     age: age,
-//   };
+// //   users.push(user);
 
-//   users.push(user);
+// //   res.json(users);
+// // });
+
+// // Update a user by id
+
+// app.put("/api/user/:id", (req, res) => {
+//   const id = req.params.id;
+
+//   const user = users.find((user) => user.id == id);
+
+//   if (!user) {
+//     res.status(404).json({ message: " User does not exist" });
+//   }
+
+//   const keys = Object.keys(req.body);
+
+//   keys.forEach((key) => {
+//     if (!user[key]) {
+//       res.status(404).end({ message: "Invalid key" });
+//     }
+//   });
+
+//   keys.forEach((key) => {
+//     user[key] = req.body[key];
+//   });
 
 //   res.json(users);
 // });
 
-// Update a user by id
+// // Delete a user
 
-app.put("/api/user/:id", (req, res) => {
-  const id = req.params.id;
+// app.delete("/api/user/:id", (req, res) => {
+//   const id = req.params.id;
 
-  const user = users.find((user) => user.id == id);
+//   const user = users.find((user) => user.id == id);
 
-  if (!user) {
-    res.status(404).json({ message: " User does not exist" });
-  }
+//   if (!user) {
+//     res.status(404).json({ message: "User does not exist" });
+//   }
 
-  const keys = Object.keys(req.body);
+//   const filteredUsers = users.filter((user) => user.id != id);
 
-  keys.forEach((key) => {
-    if (!user[key]) {
-      res.status(404).end({ message: "Invalid key" });
-    }
-  });
-
-  keys.forEach((key) => {
-    user[key] = req.body[key];
-  });
-
-  res.json(users);
-});
-
-// Delete a user
-
-app.delete("/api/user/:id", (req, res) => {
-  const id = req.params.id;
-
-  const user = users.find((user) => user.id == id);
-
-  if (!user) {
-    res.status(404).json({ message: "User does not exist" });
-  }
-
-  const filteredUsers = users.filter((user) => user.id != id);
-
-  res.json(filteredUsers);
-});
+//   res.json(filteredUsers);
+// });
 
 //mvc architecture
 // mongo db
