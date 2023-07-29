@@ -1,36 +1,38 @@
 const restaurantsModel = require("../model/restaurants.model");
 
 exports.create = (req, res) => {
-  const {
-    name,
-    cuisines,
-    avgRating,
-    deliveryTime,
-    costForTwo,
-    cloudinaryImageId,
-  } = req.body;
+  req.body.forEach((element) => {
+    const {
+      name,
+      cuisines,
+      avgRating,
+      deliveryTime,
+      costForTwo,
+      cloudinaryImageId,
+    } = element;
 
-  const newRestaurant = new restaurantsModel({
-    name,
-    cuisines,
-    avgRating,
-    deliveryTime,
-    costForTwo,
-    cloudinaryImageId,
-  });
-
-  newRestaurant
-    .save()
-    .then((data) => {
-      if (!data) {
-        res.status(400).send({ message: "Something went wrong" });
-      }
-
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: "Server not available" });
+    const newRestaurant = new restaurantsModel({
+      name,
+      cuisines,
+      avgRating,
+      deliveryTime,
+      costForTwo,
+      cloudinaryImageId,
     });
+
+    newRestaurant
+      .save()
+      .then((data) => {
+        if (!data) {
+          res.status(400).send({ message: "Something went wrong" });
+        }
+
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({ message: "Server not available" });
+      });
+  });
 };
 
 exports.updateOne = (req, res) => {

@@ -31,6 +31,8 @@ app.listen("8000", () => {
 require(path.join(__dirname, "./Routes/users.routes"))(app);
 require(path.join(__dirname, "./Routes/restaurants.routes"))(app);
 
+require("./Routes/users-auth.routes")(app);
+
 // const users = [
 //   {
 //     id: 1,
